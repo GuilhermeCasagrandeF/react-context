@@ -3,6 +3,7 @@ import Feira from 'pages/Feira';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Carrinho from 'pages/Carrinho';
 import { UsuarioProvider } from 'shared/context/Usuario';
+import { CarrinhoProvider } from 'shared/context/Carrinho';
 
 function Router() {
     return (
@@ -12,9 +13,12 @@ function Router() {
                     <Route exact path='/'>
                         <Login />
                     </Route>
-                    <Route path='/feira'>
-                        <Feira />
-                    </Route>
+
+                    <CarrinhoProvider>
+                        <Route path='/feira'>
+                            <Feira />
+                        </Route>
+                    </CarrinhoProvider>
                 </UsuarioProvider>
 
                 <Route path='/carrinho'>
