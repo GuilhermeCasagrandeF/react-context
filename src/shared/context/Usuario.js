@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext } from "react";
 
 export const UsuarioContext = createContext();
+UsuarioContext.displayName = 'Usuario'; //Utilizado pelo react dev tools
 
 export const UsuarioProvider = ({children}) => { //prop padrão
     const [nome, setNome] = useState('');
