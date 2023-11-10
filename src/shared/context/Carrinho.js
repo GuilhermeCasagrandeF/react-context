@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { createContext } from "react";
 
 export const CarrinhoContext = createContext();
@@ -11,4 +11,25 @@ export const CarrinhoProvider = ({children}) => {
             {children}
         </CarrinhoContext.Provider>
     )
+}
+
+export const useCarrinhoContext = () => {
+    const {carrinho, setCarrinho} = useContext(CarrinhoContext);
+
+    function adicionarProduto(novoProduto){
+        const existeProduto = carrinho.some(itemDoCarrinho => itemDoCarrinho.id === novoProduto.id);
+    
+        if(!existeProduto){
+            novoProduto.quantidade = 1;
+            return setCarrinho(carrinhoAnterior => [...carrinhoAnterior, novoProduto])
+        }
+    
+        setCarrinho(carrinhoAnterior => carrinhoAnterior.map(itemDoCarrinho => {
+            if(itemDoCarrinho.id === novoProduto.id) itemDoCarrinho.quantidade += 1;
+            return itemDoCarrinho;
+        }));
+    
+    }
+
+    return {carrinho, setCarrinho, adicionarProduto}
 }
