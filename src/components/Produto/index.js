@@ -15,6 +15,21 @@ function Produto({
 }) {
   const {carrinho, setCarrinho} = useContext(CarrinhoContext);
 
+  function adicionarProduto(novoProduto){
+    const existeProduto = carrinho.some(itemDoCarrinho => itemDoCarrinho.id === novoProduto.id);
+
+    if(!existeProduto){
+      novoProduto.quantidade = 1;
+      return setCarrinho(carrinhoAnterior => [...carrinhoAnterior, novoProduto])
+    }
+
+    setCarrinho(carrinhoAnterior => carrinhoAnterior.map(itemDoCarrinho => {
+      if(itemDoCarrinho.id === novoProduto.id) itemDoCarrinho.quantidade += 1;
+      return itemDoCarrinho;
+    }));
+
+  }
+
   return (
       <Container>
         <div>
@@ -32,7 +47,7 @@ function Produto({
           >
             <RemoveIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => adicionarProduto({nome, foto, id, valor})}>
             <AddIcon />
           </IconButton>
         </div>
